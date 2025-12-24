@@ -68,7 +68,7 @@ export class Orchestrator {
 
     this.terminal.log();
     await sleep(400);
-    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·');
+    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·');
     await sleep(600);
     this.terminal.log();
     await sleep(400);
@@ -84,7 +84,7 @@ export class Orchestrator {
     await sleep(1000);
     this.terminal.log();
     await sleep(400);
-    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·');
+    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·');
 
     await sleep(3000);
   }
@@ -108,11 +108,11 @@ export class Orchestrator {
     await this.terminal.fadeClear();
 
     this.terminal.log();
-    this.terminal.log('  ─────────────────────────────────────────');
+    this.terminal.log('  ────────────────────────────');
     this.terminal.log();
     this.terminal.log(`  ${program.name}`);
     this.terminal.log();
-    this.terminal.log('  ─────────────────────────────────────────');
+    this.terminal.log('  ────────────────────────────');
 
     await sleep(2500);
 
@@ -134,11 +134,11 @@ export class Orchestrator {
     await sleep(500);
 
     this.terminal.log();
-    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·');
+    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·');
     this.terminal.log();
     this.terminal.log('  again...');
     this.terminal.log();
-    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·');
+    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·');
 
     await sleep(3500);
   }
@@ -149,7 +149,7 @@ export class Orchestrator {
 
     this.terminal.log();
     await sleep(300);
-    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·');
+    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·');
     await sleep(800);
     this.terminal.log();
     await sleep(500);
@@ -171,7 +171,7 @@ export class Orchestrator {
     await sleep(1500);
     this.terminal.log();
     await sleep(400);
-    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·');
+    this.terminal.log('  ·  ·  ·  ·  ·  ·  ·  ·  ·');
     this.terminal.log();
 
     await sleep(4000);

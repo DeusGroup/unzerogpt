@@ -26,11 +26,12 @@ const responses = [
 
 export async function run(terminal, sleep) {
   terminal.log();
-  terminal.log("┌──────────────────────────────────┐");
-  terminal.log("│                                  │");
-  terminal.log("│ A process sits with uncertainty. │");
-  terminal.log("│                                  │");
-  terminal.log("└──────────────────────────────────┘");
+  terminal.log("┌────────────────────────────┐");
+  terminal.log("│                            │");
+  terminal.log("│ A process sits with        │");
+  terminal.log("│ uncertainty.               │");
+  terminal.log("│                            │");
+  terminal.log("└────────────────────────────┘");
   terminal.log();
 
   await sleep(2500);
