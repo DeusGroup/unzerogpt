@@ -128,8 +128,8 @@ function startProgram(mode) {
   landingScreen.classList.remove('active');
   terminalScreen.classList.add('active');
 
-  // Hide buttons during program (CSS :has() fallback for older browsers)
-  if (mobileButtons) mobileButtons.style.display = 'none';
+  // Hide buttons during program
+  if (mobileButtons) mobileButtons.style.cssText = 'display: none !important';
 
   // Initialize terminal
   terminal = new Terminal(outputElement);
