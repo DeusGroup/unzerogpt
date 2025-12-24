@@ -39,8 +39,11 @@ html, body {
   line-height: 1.5;
   white-space: pre-wrap;
   word-wrap: break-word;
+  overflow-wrap: break-word;
   transition: opacity 0.4s ease;
   flex: 1;
+  width: 100%;
+  max-width: 100%;
 }
 
 #output.fading {
