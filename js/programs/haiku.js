@@ -45,7 +45,7 @@ const intros = [
 ];
 
 export async function run(terminal, sleep) {
-  const now = new Date().toISOString().replace('T', ' ').slice(0, 19);
+  const now = new Date().toISOString();
 
   terminal.log();
   terminal.log('┌────────────────────┐');
