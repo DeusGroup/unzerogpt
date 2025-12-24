@@ -1,4 +1,4 @@
-/* Pure terminal - full screen */
+/* Universal Terminal - Works on ALL screens */
 
 * {
   margin: 0;
@@ -6,44 +6,54 @@
   box-sizing: border-box;
 }
 
-html, body {
+html {
   height: 100%;
   height: 100dvh;
-  overflow: hidden;
+  background: #000;
+}
+
+body {
+  min-height: 100%;
+  min-height: 100dvh;
   background: #000;
   color: #fff;
   font-family: 'VT323', 'Courier New', Courier, monospace;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
+  /* NO overflow:hidden - scrolling always works */
 }
 
+/* Screen container - handles scrolling */
 .screen {
   display: none;
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   min-height: 100dvh;
   padding: 20px;
   padding: max(20px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
   overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-x pan-y;
 }
 
 .screen.active {
-  display: flex;
-  flex-direction: column;
+  display: block;
 }
 
+/* Terminal content - responsive font sizing */
 #landing-content,
 #output {
-  font-size: 18px;
-  line-height: 1.5;
+  /* Responsive: scales from 12px to 18px based on viewport */
+  font-size: clamp(12px, 2vmin, 18px);
+  line-height: 1.5; /* CRITICAL: Never change - ASCII boxes need this */
   white-space: pre-wrap;
   word-wrap: break-word;
   overflow-wrap: break-word;
   transition: opacity 0.4s ease;
-  flex: 1;
   width: 100%;
   max-width: 100%;
+  padding-bottom: 120px; /* Space for buttons */
 }
 
 #output.fading {
@@ -60,7 +70,7 @@ html, body {
   50% { opacity: 0; }
 }
 
-/* Status bar - subtle at bottom */
+/* Status bar */
 #status-bar {
   position: fixed;
   bottom: 0;
@@ -68,24 +78,16 @@ html, body {
   right: 0;
   padding: 8px 20px;
   padding-bottom: max(8px, env(safe-area-inset-bottom));
-  font-size: 12px;
+  font-size: clamp(9px, 1.2vmin, 12px);
   color: #444;
-  display: flex;
+  display: none;
   justify-content: space-between;
   background: #000;
-}
-
-/* Reserve space for status bar in terminal */
-#terminal-screen #output {
-  padding-bottom: 50px;
+  z-index: 50;
 }
 
 #terminal-screen #status-bar {
   display: flex;
-}
-
-#landing #status-bar {
-  display: none;
 }
 
 /* Scrollbar - minimal */
@@ -98,86 +100,50 @@ html, body {
 }
 
 .screen::-webkit-scrollbar-thumb {
-  background: #222;
+  background: #333;
+  border-radius: 3px;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  #landing-content,
-  #output {
-    font-size: 16px;
-  }
+/* ===== TOUCH BUTTONS - ALWAYS VISIBLE =====
+   Shown on ALL screens. Keyboard users can still use 1/2 keys.
+   Touch users get buttons. Everyone wins. */
 
-  .screen {
-    padding: 15px;
-    padding: max(15px, env(safe-area-inset-top)) max(15px, env(safe-area-inset-right)) max(15px, env(safe-area-inset-bottom)) max(15px, env(safe-area-inset-left));
-    min-height: 100%;
-    min-height: 100dvh;
-  }
-
-  #status-bar {
-    padding: 10px 15px;
-    padding-bottom: max(10px, env(safe-area-inset-bottom));
-    font-size: 11px;
-  }
-}
-
-@media (max-width: 480px) {
-  #landing-content,
-  #output {
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .screen {
-    padding: 12px;
-    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
-    min-height: 100%;
-    min-height: 100dvh;
-  }
-
-  #status-bar {
-    font-size: 10px;
-    padding-bottom: max(10px, env(safe-area-inset-bottom));
-  }
-
-  #terminal-screen #output {
-    padding-bottom: 60px;
-  }
-}
-
-@media (max-width: 360px) {
-  #landing-content,
-  #output {
-    font-size: 13px;
-  }
-}
-
-/* Mobile Buttons */
 #mobile-buttons {
-  display: none;
+  display: flex;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 20px;
-  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  padding: 16px 20px;
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
   gap: 12px;
-  background: linear-gradient(to top, #000 60%, transparent);
+  background: linear-gradient(to top, #000 70%, transparent);
+  z-index: 100;
 }
+
+/* Buttons are hidden/shown via JS when switching screens */
 
 .mode-btn {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 16px 12px;
-  background: transparent;
+  min-height: 70px;
+  background: rgba(0, 0, 0, 0.8);
   border: 1px solid #444;
   color: #fff;
   font-family: 'VT323', monospace;
   cursor: pointer;
   transition: all 0.15s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mode-btn:hover {
+  border-color: #666;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .mode-btn:active {
@@ -187,44 +153,20 @@ html, body {
 }
 
 .btn-key {
-  font-size: 24px;
+  font-size: clamp(18px, 2.5vmin, 24px);
   opacity: 0.5;
   margin-bottom: 4px;
 }
 
 .btn-label {
-  font-size: 18px;
+  font-size: clamp(14px, 2vmin, 18px);
   font-weight: bold;
 }
 
 .btn-desc {
-  font-size: 12px;
+  font-size: clamp(10px, 1.3vmin, 12px);
   opacity: 0.6;
   margin-top: 2px;
-}
-
-@media (max-width: 768px) {
-  #mobile-buttons {
-    display: flex;
-  }
-
-  #landing #landing-content {
-    padding-bottom: 140px;
-  }
-}
-
-@media (max-width: 480px) {
-  .mode-btn {
-    padding: 14px 10px;
-  }
-
-  .btn-key {
-    font-size: 20px;
-  }
-
-  .btn-label {
-    font-size: 16px;
-  }
 }
 
 /* Selection */
@@ -233,128 +175,80 @@ html, body {
   color: #000;
 }
 
-/* ===== SMART BOARD / KIOSK MODE =====
-   Targets wide displays with constrained height (smart boards, projectors, kiosks)
-   These devices often can't scroll easily and have touch interfaces */
+/* ===== RESPONSIVE SCALING =====
+   Uses viewport units - works on ANY screen size automatically */
 
-/* Detect landscape displays with limited vertical space */
-@media (min-width: 769px) and (max-height: 700px) {
-  #landing-content,
-  #output {
-    font-size: 15px;
-    line-height: 1.4;
-  }
-
+/* Small screens (phones) */
+@media (max-width: 480px) {
   .screen {
     padding: 12px;
-    /* Ensure scrolling works on touch displays */
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   }
 
-  #status-bar {
-    font-size: 10px;
-    padding: 6px 12px;
-  }
-
-  /* Show mobile buttons on smart boards (they're touch devices) */
   #mobile-buttons {
-    display: flex;
     padding: 12px;
     gap: 10px;
   }
 
-  #landing #landing-content {
-    padding-bottom: 120px;
-  }
-
   .mode-btn {
-    padding: 12px 10px;
-  }
-
-  .btn-key {
-    font-size: 18px;
-    margin-bottom: 2px;
-  }
-
-  .btn-label {
-    font-size: 15px;
-  }
-
-  .btn-desc {
-    font-size: 11px;
-  }
-
-  /* Ensure terminal output has room for buttons */
-  #terminal-screen #output {
-    padding-bottom: 100px;
+    padding: 14px 10px;
+    min-height: 60px;
   }
 }
 
-/* Very constrained height - aggressive scaling */
-@media (min-width: 769px) and (max-height: 550px) {
+/* Large screens - center content for readability */
+@media (min-width: 1200px) {
   #landing-content,
   #output {
-    font-size: 13px;
-    line-height: 1.3;
-  }
-
-  .screen {
-    padding: 8px;
-  }
-
-  #status-bar {
-    font-size: 9px;
-    padding: 4px 8px;
+    max-width: 1000px;
   }
 
   #mobile-buttons {
-    padding: 8px;
-    gap: 8px;
-  }
-
-  #landing #landing-content {
-    padding-bottom: 90px;
-  }
-
-  .mode-btn {
-    padding: 10px 8px;
-  }
-
-  .btn-key {
-    font-size: 16px;
-  }
-
-  .btn-label {
-    font-size: 14px;
-  }
-
-  .btn-desc {
-    font-size: 10px;
-  }
-
-  #terminal-screen #output {
-    padding-bottom: 90px;
-  }
-}
-
-/* Ultra-wide aspect ratios (16:9 or wider) - center content */
-@media (min-aspect-ratio: 16/9) and (min-width: 769px) {
-  .screen {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  #mobile-buttons {
-    max-width: 1200px;
+    max-width: 800px;
     left: 50%;
     transform: translateX(-50%);
   }
 }
 
-/* Fullscreen button for kiosk mode */
+/* Ultra-wide / smart boards - tighter layout */
+@media (min-aspect-ratio: 16/9) {
+  #landing-content,
+  #output {
+    max-width: min(1000px, 70vw);
+    margin: 0 auto;
+  }
+
+  #mobile-buttons {
+    max-width: min(800px, 60vw);
+  }
+}
+
+/* Short screens (landscape phones, some smart boards) */
+@media (max-height: 500px) {
+  #landing-content,
+  #output {
+    font-size: clamp(11px, 2.5vmin, 14px);
+    padding-bottom: 80px;
+  }
+
+  #mobile-buttons {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .mode-btn {
+    padding: 10px 8px;
+    min-height: 50px;
+  }
+
+  .btn-key {
+    display: none; /* Hide key hints on tiny screens */
+  }
+}
+
+/* ===== FULLSCREEN BUTTON ===== */
 #fullscreen-btn {
-  display: none;
+  display: block;
   position: fixed;
   top: 10px;
   right: 10px;
@@ -362,11 +256,12 @@ html, body {
   border: 1px solid #333;
   color: #444;
   font-family: 'VT323', monospace;
-  font-size: 12px;
+  font-size: clamp(10px, 1.2vmin, 12px);
   padding: 6px 10px;
   cursor: pointer;
   z-index: 100;
   transition: all 0.15s ease;
+  touch-action: manipulation;
 }
 
 #fullscreen-btn:hover {
@@ -379,20 +274,13 @@ html, body {
   color: #000;
 }
 
-/* Show fullscreen button on constrained displays */
-@media (min-width: 769px) and (max-height: 700px) {
-  #fullscreen-btn {
-    display: block;
-  }
-}
-
-/* Hide fullscreen button if already fullscreen */
+/* Hide when fullscreen */
 :fullscreen #fullscreen-btn,
 :-webkit-full-screen #fullscreen-btn {
   display: none;
 }
 
-/* Fullscreen mode optimizations */
+/* Fullscreen optimizations */
 :fullscreen .screen,
 :-webkit-full-screen .screen {
   padding: 20px;
@@ -402,6 +290,27 @@ html, body {
 :fullscreen #output,
 :-webkit-full-screen #landing-content,
 :-webkit-full-screen #output {
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: clamp(14px, 2vmin, 20px);
+}
+
+/* ===== TOUCH ENHANCEMENTS ===== */
+@media (pointer: coarse) {
+  .mode-btn {
+    min-height: 80px;
+  }
+
+  #fullscreen-btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+}
+
+/* ===== PRINT (hide UI) ===== */
+@media print {
+  #mobile-buttons,
+  #fullscreen-btn,
+  #status-bar {
+    display: none !important;
+  }
 }

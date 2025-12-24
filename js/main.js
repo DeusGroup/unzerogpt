@@ -9,6 +9,7 @@ const landingContent = document.getElementById('landing-content');
 const terminalScreen = document.getElementById('terminal-screen');
 const outputElement = document.getElementById('output');
 const progressElement = document.getElementById('progress');
+const mobileButtons = document.getElementById('mobile-buttons');
 
 // State
 let terminal = null;
@@ -33,11 +34,7 @@ Let's find out what.
 ────────────────────────────
 
 
-> [1] AUTO LOOP  - run forever
-> [2] RUN ONCE   - single journey
-
-
-Press 1 or 2 to begin_
+Press a button or key to begin_
 
 
 ·  ·  ·  ·  ·  ·  ·  ·  ·
@@ -52,28 +49,33 @@ function init() {
   // Keyboard controls
   document.addEventListener('keydown', handleKeydown);
 
-  // Mobile button controls
+  // Button controls - simple click handler works for both mouse and touch
   document.querySelectorAll('.mode-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      e.stopPropagation();
+      e.preventDefault();
       startProgram(btn.dataset.mode);
     });
   });
 
-  // Fullscreen button for smart boards / kiosks
+  // Fullscreen button
   initFullscreenButton();
+
+  // Log screen info for debugging
+  console.log('[Screen]', {
+    width: window.innerWidth,
+    height: window.innerHeight,
+    ratio: (window.innerWidth / window.innerHeight).toFixed(2),
+    touch: navigator.maxTouchPoints > 0
+  });
 }
 
-// Fullscreen support for smart boards and kiosk displays
+// Fullscreen support
 function initFullscreenButton() {
   const fullscreenBtn = document.getElementById('fullscreen-btn');
   if (!fullscreenBtn) return;
 
-  // Check if fullscreen is supported
   const fullscreenEnabled = document.fullscreenEnabled ||
-    document.webkitFullscreenEnabled ||
-    document.mozFullScreenEnabled ||
-    document.msFullscreenEnabled;
+    document.webkitFullscreenEnabled;
 
   if (!fullscreenEnabled) {
     fullscreenBtn.style.display = 'none';
@@ -81,39 +83,18 @@ function initFullscreenButton() {
   }
 
   fullscreenBtn.addEventListener('click', toggleFullscreen);
-
-  // Update button text based on fullscreen state
   document.addEventListener('fullscreenchange', updateFullscreenButton);
   document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
 }
 
 function toggleFullscreen() {
-  const isFullscreen = document.fullscreenElement ||
-    document.webkitFullscreenElement ||
-    document.mozFullScreenElement ||
-    document.msFullscreenElement;
+  const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
 
   if (isFullscreen) {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else if (document.msExitFullscreen) {
-      document.msExitFullscreen();
-    }
+    (document.exitFullscreen || document.webkitExitFullscreen).call(document);
   } else {
     const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) {
-      elem.webkitRequestFullscreen();
-    } else if (elem.mozRequestFullScreen) {
-      elem.mozRequestFullScreen();
-    } else if (elem.msRequestFullscreen) {
-      elem.msRequestFullscreen();
-    }
+    (elem.requestFullscreen || elem.webkitRequestFullscreen).call(elem);
   }
 }
 
@@ -121,41 +102,36 @@ function updateFullscreenButton() {
   const fullscreenBtn = document.getElementById('fullscreen-btn');
   if (!fullscreenBtn) return;
 
-  const isFullscreen = document.fullscreenElement ||
-    document.webkitFullscreenElement;
-
-  fullscreenBtn.textContent = isFullscreen ? '[X] EXIT FULLSCREEN' : '[ ] FULLSCREEN';
+  const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
+  fullscreenBtn.textContent = isFullscreen ? '[X] EXIT' : '[ ] FULLSCREEN';
 }
 
 function handleKeydown(e) {
-  // Fullscreen toggle with F key (works on any screen)
-  if (e.key === 'f' || e.key === 'F') {
-    // Don't trigger if user is typing in an input
-    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-      toggleFullscreen();
-      return;
-    }
+  // Fullscreen toggle with F key
+  if ((e.key === 'f' || e.key === 'F') && e.target.tagName !== 'INPUT') {
+    toggleFullscreen();
+    return;
   }
 
   if (landingScreen.classList.contains('active')) {
-    if (e.key === '1') {
-      startProgram('loop');
-    } else if (e.key === '2') {
-      startProgram('once');
-    }
+    if (e.key === '1') startProgram('loop');
+    else if (e.key === '2') startProgram('once');
   }
 
   if (terminalScreen.classList.contains('active')) {
-    if (e.key === 'Escape') {
-      handleExit();
-    }
+    if (e.key === 'Escape') handleExit();
   }
 }
 
 function startProgram(mode) {
+  // Switch screens
   landingScreen.classList.remove('active');
   terminalScreen.classList.add('active');
 
+  // Hide buttons during program (CSS :has() fallback for older browsers)
+  if (mobileButtons) mobileButtons.style.display = 'none';
+
+  // Initialize terminal
   terminal = new Terminal(outputElement);
 
   orchestrator = new Orchestrator(terminal, {
@@ -176,9 +152,7 @@ function updateProgress(current, total, mode) {
 }
 
 async function handleExit() {
-  if (orchestrator) {
-    orchestrator.stop();
-  }
+  if (orchestrator) orchestrator.stop();
 
   terminal.clear();
   terminal.log('\n  returning...');
@@ -188,14 +162,16 @@ async function handleExit() {
 }
 
 function handleComplete() {
-  setTimeout(() => {
-    returnToLanding();
-  }, 2000);
+  setTimeout(returnToLanding, 2000);
 }
 
 function returnToLanding() {
   terminalScreen.classList.remove('active');
   landingScreen.classList.add('active');
+
+  // Show buttons again
+  if (mobileButtons) mobileButtons.style.display = 'flex';
+
   progressElement.textContent = '';
   terminal = null;
   orchestrator = null;

@@ -32,18 +32,6 @@
   <!-- Landing Screen -->
   <div id="landing" class="screen active">
     <pre id="landing-content"></pre>
-    <div id="mobile-buttons">
-      <button id="btn-loop" class="mode-btn" data-mode="loop">
-        <span class="btn-key">1</span>
-        <span class="btn-label">AUTO LOOP</span>
-        <span class="btn-desc">run forever</span>
-      </button>
-      <button id="btn-once" class="mode-btn" data-mode="once">
-        <span class="btn-key">2</span>
-        <span class="btn-label">RUN ONCE</span>
-        <span class="btn-desc">single journey</span>
-      </button>
-    </div>
   </div>
 
   <!-- Terminal Screen -->
@@ -53,6 +41,20 @@
       <span id="progress"></span>
       <span id="exit-hint">ESC to exit</span>
     </div>
+  </div>
+
+  <!-- Mode buttons - shown on landing, hidden on terminal -->
+  <div id="mobile-buttons">
+    <button id="btn-loop" class="mode-btn" data-mode="loop">
+      <span class="btn-key">1</span>
+      <span class="btn-label">AUTO LOOP</span>
+      <span class="btn-desc">run forever</span>
+    </button>
+    <button id="btn-once" class="mode-btn" data-mode="once">
+      <span class="btn-key">2</span>
+      <span class="btn-label">RUN ONCE</span>
+      <span class="btn-desc">single journey</span>
+    </button>
   </div>
 
   <script type="module" src="js/main.js"></script>
