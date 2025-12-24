@@ -60,10 +60,17 @@ html, body {
   left: 0;
   right: 0;
   padding: 8px 20px;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
   font-size: 12px;
   color: #444;
   display: flex;
   justify-content: space-between;
+  background: #000;
+}
+
+/* Reserve space for status bar in terminal */
+#terminal-screen #output {
+  padding-bottom: 50px;
 }
 
 #terminal-screen #status-bar {
@@ -120,6 +127,11 @@ html, body {
 
   #status-bar {
     font-size: 10px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  #terminal-screen #output {
+    padding-bottom: 60px;
   }
 }
 
