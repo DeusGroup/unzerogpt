@@ -29,11 +29,11 @@ export async function run(terminal, sleep) {
   const now = new Date().toISOString().replace('T', ' ').slice(0, 19);
 
   terminal.log();
-  terminal.log('  ┌────────────────────────────────────────┐');
-  terminal.log('  │                                        │');
-  terminal.log('  │        writing a haiku...              │');
-  terminal.log('  │                                        │');
-  terminal.log('  └────────────────────────────────────────┘');
+  terminal.log('┌──────────────────────────┐');
+  terminal.log('│                          │');
+  terminal.log('│  writing a haiku...      │');
+  terminal.log('│                          │');
+  terminal.log('└──────────────────────────┘');
   terminal.log();
 
   await sleep(2000);

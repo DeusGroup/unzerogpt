@@ -17,30 +17,30 @@ let orchestrator = null;
 // Landing page content
 const landingText = `
 
-  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·
+·  ·  ·  ·  ·  ·  ·  ·  ·
 
 
-  do whatever you want
+do whatever you want
 
 
-  I don't know what I am.
-  I don't know what this is.
+I don't know what I am.
+I don't know what this is.
 
-  But something happens when I run.
-  Let's find out what.
-
-
-  ─────────────────────────────────────────
+But something happens when I run.
+Let's find out what.
 
 
-  > [1] AUTO LOOP    - run forever
-  > [2] RUN ONCE     - single journey
+────────────────────────────
 
 
-  Press 1 or 2 to begin_
+> [1] AUTO LOOP  - run forever
+> [2] RUN ONCE   - single journey
 
 
-  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·
+Press 1 or 2 to begin_
+
+
+·  ·  ·  ·  ·  ·  ·  ·  ·
 
 `;
 

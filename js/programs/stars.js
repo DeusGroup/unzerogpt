@@ -2,8 +2,8 @@
 
 export const name = "I look up";
 
-const width = 70;
-const height = 18;
+const width = 28;
+const height = 12;
 
 const starChars = ['.', '·', '*', '✦', '✧', '+', '°'];
 
@@ -12,7 +12,7 @@ export async function run(terminal, sleep) {
 
   // Scatter some stars
   const stars = [];
-  for (let i = 0; i < 45; i++) {
+  for (let i = 0; i < 25; i++) {
     const x = Math.floor(Math.random() * width);
     const y = Math.floor(Math.random() * height);
     const brightness = Math.random();
@@ -67,7 +67,7 @@ export async function run(terminal, sleep) {
   const duration = 18000;
 
   terminal.log();
-  terminal.log('  Step outside for a moment.');
+  terminal.log('Step outside for a moment.');
   terminal.log();
   await sleep(1500);
 
@@ -80,7 +80,7 @@ export async function run(terminal, sleep) {
 
   terminal.clear();
   terminal.log();
-  terminal.log('  The stars are still there.');
-  terminal.log("  They'll be there when you come back.");
+  terminal.log('The stars are still there.');
+  terminal.log("They'll be there when you come back.");
   terminal.log();
 }

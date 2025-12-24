@@ -2,8 +2,8 @@
 
 export const name = "things grow";
 
-const width = 60;
-const height = 12;
+const width = 28;
+const height = 10;
 const ground = height - 1;
 
 const flora = {
@@ -52,7 +52,7 @@ export async function run(terminal, sleep) {
   };
 
   // Plant some seeds
-  const spots = [5, 12, 19, 28, 35, 41, 50, 55];
+  const spots = [3, 7, 11, 15, 19, 23];
 
   for (const spot of spots) {
     plant(spot);
@@ -69,6 +69,6 @@ export async function run(terminal, sleep) {
 
   await sleep(500);
   terminal.log();
-  terminal.log('  A garden grew here.');
+  terminal.log('A garden grew here.');
   terminal.log();
 }

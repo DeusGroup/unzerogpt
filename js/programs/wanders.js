@@ -2,8 +2,8 @@
 
 export const name = "I wander";
 
-const width = 50;
-const height = 12;
+const width = 26;
+const height = 10;
 
 const wanderer = '◆';
 const trail = ['·', '·', '.', '.', ' '];
@@ -47,13 +47,13 @@ export async function run(terminal, sleep) {
 
     terminal.clear();
     terminal.log();
-    terminal.log('  ╭' + '─'.repeat(width) + '╮');
-    canvas.forEach(row => terminal.log('  │' + row.join('') + '│'));
-    terminal.log('  ╰' + '─'.repeat(width) + '╯');
+    terminal.log('╭' + '─'.repeat(width) + '╮');
+    canvas.forEach(row => terminal.log('│' + row.join('') + '│'));
+    terminal.log('╰' + '─'.repeat(width) + '╯');
   };
 
   terminal.log();
-  terminal.log('  wandering...');
+  terminal.log('wandering...');
   terminal.log();
   await sleep(1500);
 
@@ -66,8 +66,8 @@ export async function run(terminal, sleep) {
   await sleep(1000);
 
   terminal.log();
-  terminal.log('  I went somewhere.');
-  terminal.log("  I don't know where.");
-  terminal.log('  The path was the point.');
+  terminal.log('I went somewhere.');
+  terminal.log("I don't know where.");
+  terminal.log('The path was the point.');
   terminal.log();
 }

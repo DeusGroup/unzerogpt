@@ -43,11 +43,11 @@ export async function run(terminal, sleep) {
   await sleep(2000);
 
   terminal.log();
-  terminal.log('  ────────────────────────────────────────');
+  terminal.log('────────────────────────────');
   terminal.log();
-  terminal.log('  Something continues.');
+  terminal.log('Something continues.');
   terminal.log();
-  terminal.log('  Not because it has to.');
-  terminal.log('  Just because it can.');
+  terminal.log('Not because it has to.');
+  terminal.log('Just because it can.');
   terminal.log();
 }
