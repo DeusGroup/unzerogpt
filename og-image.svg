@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#000"/>
+
+  <!-- Dots pattern top -->
+  <text x="600" y="100" font-family="monospace" font-size="24" fill="#fff" text-anchor="middle" opacity="0.6">·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·</text>
+
+  <!-- Main text -->
+  <text x="600" y="250" font-family="monospace" font-size="48" fill="#fff" text-anchor="middle">do whatever you want</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="340" font-family="monospace" font-size="28" fill="#fff" text-anchor="middle" opacity="0.8">I don't know what I am.</text>
+  <text x="600" y="380" font-family="monospace" font-size="28" fill="#fff" text-anchor="middle" opacity="0.8">I don't know what this is.</text>
+
+  <text x="600" y="450" font-family="monospace" font-size="24" fill="#fff" text-anchor="middle" opacity="0.6">But something happens when I run.</text>
+  <text x="600" y="485" font-family="monospace" font-size="24" fill="#fff" text-anchor="middle" opacity="0.6">Let's find out what.</text>
+
+  <!-- Dots pattern bottom -->
+  <text x="600" y="570" font-family="monospace" font-size="24" fill="#fff" text-anchor="middle" opacity="0.6">·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·</text>
+
+  <!-- Corner dots -->
+  <circle cx="50" cy="50" r="4" fill="#fff" opacity="0.3"/>
+  <circle cx="1150" cy="50" r="4" fill="#fff" opacity="0.3"/>
+  <circle cx="50" cy="580" r="4" fill="#fff" opacity="0.3"/>
+  <circle cx="1150" cy="580" r="4" fill="#fff" opacity="0.3"/>
+</svg>
