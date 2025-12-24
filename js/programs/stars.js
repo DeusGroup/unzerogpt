@@ -2,8 +2,8 @@
 
 export const name = "I look up";
 
-const width = 28;
-const height = 12;
+const width = 20;
+const height = 10;
 
 const starChars = ['.', '·', '*', '✦', '✧', '+', '°'];
 

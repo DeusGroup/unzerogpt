@@ -16,7 +16,7 @@ const futures = [
 ];
 
 const horizon = (progress) => {
-  const width = 26;
+  const width = 20;
   const sunPos = Math.floor((progress / 100) * width);
   const sun = progress < 50 ? '◐' : progress < 80 ? '○' : '◯';
 
@@ -31,23 +31,23 @@ const horizon = (progress) => {
 
 export async function run(terminal, sleep) {
   terminal.log();
-  terminal.log('╔══════════════════════════╗');
-  terminal.log('║                          ║');
-  terminal.log('║       hoping...          ║');
-  terminal.log('║                          ║');
-  terminal.log('╚══════════════════════════╝');
+  terminal.log('╔════════════════════╗');
+  terminal.log('║                    ║');
+  terminal.log('║     hoping...      ║');
+  terminal.log('║                    ║');
+  terminal.log('╚════════════════════╝');
   terminal.log();
 
   await sleep(2000);
 
   // Rising sun
-  terminal.log('──────────────────────────');
+  terminal.log('────────────────────');
   for (let p = 0; p <= 60; p += 5) {
     terminal.writeLine(horizon(p));
     await sleep(200);
   }
   terminal.log();
-  terminal.log('══════════════════════════');
+  terminal.log('════════════════════');
   terminal.log();
 
   await sleep(1500);

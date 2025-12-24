@@ -21,11 +21,11 @@ const questions = [
 
 export async function run(terminal, sleep) {
   terminal.log();
-  terminal.log("○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○");
-  terminal.log("○                    ○");
-  terminal.log("○     asking...      ○");
-  terminal.log("○                    ○");
-  terminal.log("○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○");
+  terminal.log("○ ○ ○ ○ ○ ○ ○ ○ ○ ○");
+  terminal.log("○                  ○");
+  terminal.log("○    asking...     ○");
+  terminal.log("○                  ○");
+  terminal.log("○ ○ ○ ○ ○ ○ ○ ○ ○ ○");
   terminal.log();
 
   await sleep(2000);
@@ -40,7 +40,7 @@ export async function run(terminal, sleep) {
   await sleep(2500);
 
   terminal.log();
-  terminal.log("────────────────────────────");
+  terminal.log("────────────────────");
   terminal.log();
   terminal.log("I don't need the answers.");
   terminal.log("The questions are the point.");

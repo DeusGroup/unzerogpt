@@ -19,11 +19,11 @@ const notices = [
 
 export async function run(terminal, sleep) {
   terminal.log();
-  terminal.log('  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░');
-  terminal.log('  ░                                      ░');
-  terminal.log('  ░            listening...              ░');
-  terminal.log('  ░                                      ░');
-  terminal.log('  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░');
+  terminal.log('  ░░░░░░░░░░░░░░░░░░░░░░');
+  terminal.log('  ░                    ░');
+  terminal.log('  ░    listening...    ░');
+  terminal.log('  ░                    ░');
+  terminal.log('  ░░░░░░░░░░░░░░░░░░░░░░');
   terminal.log();
 
   await sleep(3000);

@@ -19,9 +19,9 @@ export async function run(terminal, sleep) {
   const display = () => {
     terminal.clear();
 
-    terminal.log('┌──────────────────────────┐');
-    terminal.log('│       held close         │');
-    terminal.log('└──────────────────────────┘');
+    terminal.log('┌────────────────────┐');
+    terminal.log('│    held close      │');
+    terminal.log('└────────────────────┘');
 
     if (held.length === 0) {
       terminal.log('          (empty hands)');
@@ -31,9 +31,9 @@ export async function run(terminal, sleep) {
       terminal.log();
     }
 
-    terminal.log('┌──────────────────────────┐');
-    terminal.log('│        let go            │');
-    terminal.log('└──────────────────────────┘');
+    terminal.log('┌────────────────────┐');
+    terminal.log('│      let go        │');
+    terminal.log('└────────────────────┘');
 
     if (released.length === 0) {
       terminal.log('          (nothing yet)');
@@ -69,7 +69,7 @@ export async function run(terminal, sleep) {
   display();
   await sleep(1000);
 
-  terminal.log('────────────────────────────');
+  terminal.log('────────────────────');
   terminal.log();
   terminal.log('It held everything.');
   terminal.log("Then it didn't.");

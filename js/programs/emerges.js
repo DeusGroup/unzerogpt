@@ -4,7 +4,7 @@ import { pick } from '../terminal.js';
 
 export const name = "patterns emerge";
 
-const width = 28;
+const width = 20;
 const height = 12;
 const generations = 35;
 

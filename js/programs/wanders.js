@@ -2,7 +2,7 @@
 
 export const name = "I wander";
 
-const width = 26;
+const width = 20;
 const height = 10;
 
 const wanderer = '◆';

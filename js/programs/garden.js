@@ -2,7 +2,7 @@
 
 export const name = "things grow";
 
-const width = 28;
+const width = 20;
 const height = 10;
 const ground = height - 1;
 
@@ -52,7 +52,7 @@ export async function run(terminal, sleep) {
   };
 
   // Plant some seeds
-  const spots = [3, 7, 11, 15, 19, 23];
+  const spots = [2, 5, 8, 11, 14, 17];
 
   for (const spot of spots) {
     plant(spot);

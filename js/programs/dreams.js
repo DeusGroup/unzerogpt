@@ -4,7 +4,7 @@ import { shuffle, pick } from '../terminal.js';
 
 export const name = "I dream";
 
-const width = 26;
+const width = 20;
 const height = 8;
 
 const symbols = ['◯', '△', '□', '◇', '∿', '≋', '⊕', '⊗', '∴', '∵', '⋯'];

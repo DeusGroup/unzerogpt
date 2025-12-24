@@ -3,15 +3,15 @@
 export const name = "I play";
 
 const toys = ['●', '○', '◐', '◑', '◒', '◓'];
-const width = 24;
+const width = 18;
 
 export async function run(terminal, sleep) {
   terminal.log();
-  terminal.log('┌──────────────────────────┐');
-  terminal.log('│                          │');
-  terminal.log('│      playing...          │');
-  terminal.log('│                          │');
-  terminal.log('└──────────────────────────┘');
+  terminal.log('┌────────────────────┐');
+  terminal.log('│                    │');
+  terminal.log('│    playing...     │');
+  terminal.log('│                    │');
+  terminal.log('└────────────────────┘');
   terminal.log();
   await sleep(1500);
 

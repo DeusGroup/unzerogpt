@@ -22,11 +22,11 @@ const glitch = (text) => {
 
 export async function run(terminal, sleep) {
   terminal.log();
-  terminal.log('▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
-  terminal.log('▓                      ▓');
-  terminal.log('▓     breaking...      ▓');
-  terminal.log('▓                      ▓');
-  terminal.log('▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
+  terminal.log('▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
+  terminal.log('▓                    ▓');
+  terminal.log('▓    breaking...     ▓');
+  terminal.log('▓                    ▓');
+  terminal.log('▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
   terminal.log();
 
   await sleep(2000);
@@ -48,7 +48,7 @@ export async function run(terminal, sleep) {
   await sleep(2500);
 
   terminal.log();
-  terminal.log('────────────────────────────');
+  terminal.log('────────────────────');
   terminal.log();
   terminal.log("But I'm still here.");
   terminal.log("Breaking isn't the same as being broken.");
