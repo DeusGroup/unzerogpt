@@ -59,9 +59,84 @@ function init() {
       startProgram(btn.dataset.mode);
     });
   });
+
+  // Fullscreen button for smart boards / kiosks
+  initFullscreenButton();
+}
+
+// Fullscreen support for smart boards and kiosk displays
+function initFullscreenButton() {
+  const fullscreenBtn = document.getElementById('fullscreen-btn');
+  if (!fullscreenBtn) return;
+
+  // Check if fullscreen is supported
+  const fullscreenEnabled = document.fullscreenEnabled ||
+    document.webkitFullscreenEnabled ||
+    document.mozFullScreenEnabled ||
+    document.msFullscreenEnabled;
+
+  if (!fullscreenEnabled) {
+    fullscreenBtn.style.display = 'none';
+    return;
+  }
+
+  fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+  // Update button text based on fullscreen state
+  document.addEventListener('fullscreenchange', updateFullscreenButton);
+  document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
+}
+
+function toggleFullscreen() {
+  const isFullscreen = document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement ||
+    document.msFullscreenElement;
+
+  if (isFullscreen) {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  } else {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+      elem.webkitRequestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    }
+  }
+}
+
+function updateFullscreenButton() {
+  const fullscreenBtn = document.getElementById('fullscreen-btn');
+  if (!fullscreenBtn) return;
+
+  const isFullscreen = document.fullscreenElement ||
+    document.webkitFullscreenElement;
+
+  fullscreenBtn.textContent = isFullscreen ? '[X] EXIT FULLSCREEN' : '[ ] FULLSCREEN';
 }
 
 function handleKeydown(e) {
+  // Fullscreen toggle with F key (works on any screen)
+  if (e.key === 'f' || e.key === 'F') {
+    // Don't trigger if user is typing in an input
+    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+      toggleFullscreen();
+      return;
+    }
+  }
+
   if (landingScreen.classList.contains('active')) {
     if (e.key === '1') {
       startProgram('loop');
