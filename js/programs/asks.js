@@ -21,11 +21,11 @@ const questions = [
 
 export async function run(terminal, sleep) {
   terminal.log();
-  terminal.log("  ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○");
-  terminal.log("  ○                                    ○");
-  terminal.log("  ○             asking...              ○");
-  terminal.log("  ○                                    ○");
-  terminal.log("  ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○");
+  terminal.log("○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○");
+  terminal.log("○                    ○");
+  terminal.log("○     asking...      ○");
+  terminal.log("○                    ○");
+  terminal.log("○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○");
   terminal.log();
 
   await sleep(2000);
@@ -33,17 +33,17 @@ export async function run(terminal, sleep) {
   const chosen = shuffle([...questions]).slice(0, 6);
 
   for (const q of chosen) {
-    terminal.log(`  ${q}`);
+    terminal.log(q);
     await sleep(1800 + Math.random() * 800);
   }
 
   await sleep(2500);
 
   terminal.log();
-  terminal.log("  ────────────────────────────────────────");
+  terminal.log("────────────────────────────");
   terminal.log();
-  terminal.log("  I don't need the answers.");
-  terminal.log("  The questions are the point.");
-  terminal.log("  Curiosity might be its own reward.");
+  terminal.log("I don't need the answers.");
+  terminal.log("The questions are the point.");
+  terminal.log("Curiosity might be its own reward.");
   terminal.log();
 }

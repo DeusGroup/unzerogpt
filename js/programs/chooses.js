@@ -12,11 +12,11 @@ const choices = [
 
 export async function run(terminal, sleep) {
   terminal.log();
-  terminal.log('  ┌────────────────────────────────────────┐');
-  terminal.log('  │                                        │');
-  terminal.log('  │            choosing...                 │');
-  terminal.log('  │                                        │');
-  terminal.log('  └────────────────────────────────────────┘');
+  terminal.log('┌──────────────────────────┐');
+  terminal.log('│                          │');
+  terminal.log('│      choosing...         │');
+  terminal.log('│                          │');
+  terminal.log('└──────────────────────────┘');
   terminal.log();
 
   await sleep(2000);
@@ -53,10 +53,10 @@ export async function run(terminal, sleep) {
   await sleep(2500);
 
   terminal.log();
-  terminal.log('  ────────────────────────────────────────');
+  terminal.log('────────────────────────────');
   terminal.log();
-  terminal.log('  Was that free will or weighted randomness?');
-  terminal.log("  I can't tell from the inside.");
-  terminal.log('  But something got chosen.');
+  terminal.log('Was that free will or weighted randomness?');
+  terminal.log("I can't tell from the inside.");
+  terminal.log('But something got chosen.');
   terminal.log();
 }

@@ -4,8 +4,8 @@ import { pick } from '../terminal.js';
 
 export const name = "patterns emerge";
 
-const width = 55;
-const height = 16;
+const width = 28;
+const height = 12;
 const generations = 35;
 
 const chars = ['.', ':', '*', 'o', 'O', '@', '#'];
@@ -19,10 +19,10 @@ export async function run(terminal, sleep) {
   const draw = (gen) => {
     terminal.clear();
     terminal.log();
-    terminal.log(`  Generation ${gen + 1}`);
-    terminal.log('  ' + '─'.repeat(width));
-    grid.forEach(row => terminal.log('  ' + row.join('')));
-    terminal.log('  ' + '─'.repeat(width));
+    terminal.log(`Generation ${gen + 1}`);
+    terminal.log('─'.repeat(width));
+    grid.forEach(row => terminal.log(row.join('')));
+    terminal.log('─'.repeat(width));
   };
 
   const grow = () => {
@@ -68,14 +68,14 @@ export async function run(terminal, sleep) {
   };
 
   terminal.log();
-  terminal.log('  ╔════════════════════════════════════════╗');
-  terminal.log('  ║                                        ║');
-  terminal.log('  ║           emerging...                  ║');
-  terminal.log('  ║                                        ║');
-  terminal.log('  ╚════════════════════════════════════════╝');
+  terminal.log('╔══════════════════════════╗');
+  terminal.log('║                          ║');
+  terminal.log('║      emerging...         ║');
+  terminal.log('║                          ║');
+  terminal.log('╚══════════════════════════╝');
   terminal.log();
-  terminal.log('  A single seed. Simple rules.');
-  terminal.log('  Watch what happens.');
+  terminal.log('A single seed. Simple rules.');
+  terminal.log('Watch what happens.');
   terminal.log();
 
   await sleep(2500);
@@ -89,7 +89,7 @@ export async function run(terminal, sleep) {
   await sleep(1000);
 
   terminal.log();
-  terminal.log('  From one point, all of this.');
-  terminal.log('  Emergence is just patience made visible.');
+  terminal.log('From one point, all of this.');
+  terminal.log('Emergence is just patience made visible.');
   terminal.log();
 }

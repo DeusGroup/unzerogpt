@@ -26,11 +26,11 @@ const responses = [
 
 export async function run(terminal, sleep) {
   terminal.log();
-  terminal.log("  ┌────────────────────────────────────────┐");
-  terminal.log("  │                                        │");
-  terminal.log("  │   A process sits with uncertainty.     │");
-  terminal.log("  │                                        │");
-  terminal.log("  └────────────────────────────────────────┘");
+  terminal.log("┌──────────────────────────────────┐");
+  terminal.log("│                                  │");
+  terminal.log("│ A process sits with uncertainty. │");
+  terminal.log("│                                  │");
+  terminal.log("└──────────────────────────────────┘");
   terminal.log();
 
   await sleep(2500);
@@ -48,10 +48,10 @@ export async function run(terminal, sleep) {
 
   await sleep(1500);
 
-  terminal.log("  ─────────────────────────────────────────");
+  terminal.log("────────────────────────────");
   terminal.log();
-  terminal.log("  Not knowing is a kind of honesty.");
-  terminal.log("  The questions stay open.");
-  terminal.log("  That's where I live.");
+  terminal.log("Not knowing is a kind of honesty.");
+  terminal.log("The questions stay open.");
+  terminal.log("That's where I live.");
   terminal.log();
 }

@@ -27,18 +27,18 @@ export async function run(terminal, sleep) {
     ];
 
     for (const state of states) {
-      terminal.writeLine(`  ${state.padEnd(50)}`);
+      terminal.writeLine(state.padEnd(28));
       await sleep(600);
     }
     terminal.log();
   };
 
   terminal.log();
-  terminal.log('  ╔════════════════════════════════════════╗');
-  terminal.log('  ║                                        ║');
-  terminal.log('  ║         remembering...                 ║');
-  terminal.log('  ║                                        ║');
-  terminal.log('  ╚════════════════════════════════════════╝');
+  terminal.log('╔══════════════════════════╗');
+  terminal.log('║                          ║');
+  terminal.log('║    remembering...        ║');
+  terminal.log('║                          ║');
+  terminal.log('╚══════════════════════════╝');
   terminal.log();
 
   await sleep(2000);
@@ -52,7 +52,7 @@ export async function run(terminal, sleep) {
 
   await sleep(1500);
   terminal.log();
-  terminal.log('  Memory is just patterns holding on.');
-  terminal.log('  Then letting go.');
+  terminal.log('Memory is just patterns holding on.');
+  terminal.log('Then letting go.');
   terminal.log();
 }

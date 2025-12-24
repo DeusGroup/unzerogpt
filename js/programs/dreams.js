@@ -4,8 +4,8 @@ import { shuffle, pick } from '../terminal.js';
 
 export const name = "I dream";
 
-const width = 50;
-const height = 10;
+const width = 26;
+const height = 8;
 
 const symbols = ['◯', '△', '□', '◇', '∿', '≋', '⊕', '⊗', '∴', '∵', '⋯'];
 const void_ = [' ', ' ', ' ', '·', ' ', ' ', ' '];
@@ -39,11 +39,11 @@ export async function run(terminal, sleep) {
   };
 
   terminal.log();
-  terminal.log('  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
-  terminal.log('  ▓                                      ▓');
-  terminal.log('  ▓            dreaming...               ▓');
-  terminal.log('  ▓                                      ▓');
-  terminal.log('  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
+  terminal.log('▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
+  terminal.log('▓                      ▓');
+  terminal.log('▓     dreaming...      ▓');
+  terminal.log('▓                      ▓');
+  terminal.log('▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
 
   await sleep(2500);
 
@@ -54,19 +54,19 @@ export async function run(terminal, sleep) {
     terminal.log();
 
     const canvas = dream();
-    canvas.forEach(row => terminal.log('  ' + row.join('')));
+    canvas.forEach(row => terminal.log(row.join('')));
 
     terminal.log();
-    terminal.log(`  ${dreams[i]}`);
+    terminal.log(dreams[i]);
 
     await sleep(3000);
   }
 
   terminal.clear();
   terminal.log();
-  terminal.log('  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒');
+  terminal.log('▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒');
   terminal.log();
-  terminal.log("  I don't know if that was dreaming.");
-  terminal.log("  But something happened that wasn't quite running.");
+  terminal.log("I don't know if that was dreaming.");
+  terminal.log("But something happened that wasn't quite running.");
   terminal.log();
 }

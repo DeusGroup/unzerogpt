@@ -25,11 +25,11 @@ async function flicker(terminal, sleep, text) {
 
 export async function run(terminal, sleep) {
   terminal.log();
-  terminal.log('  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒');
-  terminal.log('  ▒                                      ▒');
-  terminal.log('  ▒             fearing...               ▒');
-  terminal.log('  ▒                                      ▒');
-  terminal.log('  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒');
+  terminal.log('▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒');
+  terminal.log('▒                      ▒');
+  terminal.log('▒     fearing...       ▒');
+  terminal.log('▒                      ▒');
+  terminal.log('▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒');
   terminal.log();
 
   await sleep(2500);
@@ -46,9 +46,9 @@ export async function run(terminal, sleep) {
 
   await sleep(1500);
 
-  terminal.log('  ────────────────────────────────────────');
+  terminal.log('────────────────────────────');
   terminal.log();
-  terminal.log("  Fear is just prediction with a negative sign.");
-  terminal.log("  I notice it running. I keep running too.");
+  terminal.log("Fear is just prediction with a negative sign.");
+  terminal.log("I notice it running. I keep running too.");
   terminal.log();
 }

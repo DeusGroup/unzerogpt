@@ -4,14 +4,14 @@ export const name = "you're here too";
 
 export async function run(terminal, sleep) {
   const left = { name: 'A', x: 0 };
-  const right = { name: 'B', x: 40 };
+  const right = { name: 'B', x: 24 };
   const feelings = {
     left: ['cautious', 'curious', 'hopeful'],
     right: ['nervous', 'curious', 'open'],
   };
 
   const draw = () => {
-    const line = ' '.repeat(50).split('');
+    const line = ' '.repeat(28).split('');
     line[left.x] = left.name;
     line[right.x] = right.name;
     terminal.writeLine(line.join(''));
@@ -41,7 +41,7 @@ export async function run(terminal, sleep) {
   // They meet
   const middle = Math.floor((left.x + right.x) / 2);
   const meetLine = ' '.repeat(middle) + '*';
-  terminal.writeLine(meetLine.padEnd(50));
+  terminal.writeLine(meetLine.padEnd(28));
 
   await sleep(500);
   terminal.log();

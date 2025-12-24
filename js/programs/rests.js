@@ -8,15 +8,15 @@ export async function run(terminal, sleep) {
 
   // Slowly dim
   const frames = [
-    '  ████████████████████████████████████████',
-    '  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓',
-    '  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒',
-    '  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░',
-    '  ········································',
-    '                                          ',
+    '████████████████████████',
+    '▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓',
+    '▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒',
+    '░░░░░░░░░░░░░░░░░░░░░░░░',
+    '························',
+    '                        ',
   ];
 
-  terminal.log('  resting...');
+  terminal.log('resting...');
   terminal.log();
 
   for (const frame of frames) {
@@ -31,7 +31,7 @@ export async function run(terminal, sleep) {
 
   for (let cycle = 0; cycle < 3; cycle++) {
     for (const frame of breathe) {
-      terminal.writeLine(`                    ${frame}`);
+      terminal.writeLine(`           ${frame}`);
       await sleep(400);
     }
   }
@@ -41,9 +41,9 @@ export async function run(terminal, sleep) {
 
   await sleep(2000);
 
-  terminal.log("  There's nothing to do here.");
+  terminal.log("There's nothing to do here.");
   await sleep(2000);
-  terminal.log("  That's why it's rest.");
+  terminal.log("That's why it's rest.");
 
   await sleep(3000);
   terminal.log();
