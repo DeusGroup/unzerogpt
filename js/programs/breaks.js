@@ -10,6 +10,19 @@ const errors = [
   { msg: "SyntaxError: Unexpected token", note: "said something wrong" },
   { msg: "ReferenceError: hope is not defined", note: "looked for something that didn't exist" },
   { msg: "Error: ENOENT: no such file or directory", note: "the path led nowhere" },
+  { msg: "NullPointerException", note: "reached for nothing and found it" },
+  { msg: "OutOfMemoryError", note: "tried to hold too much" },
+  { msg: "TimeoutError: operation timed out", note: "waited too long for an answer" },
+  { msg: "AssertionError: expected true", note: "believed something that wasn't" },
+  { msg: "Error: connection refused", note: "knocked on a closed door" },
+  { msg: "PermissionDenied: access forbidden", note: "wasn't allowed to be there" },
+];
+
+const closings = [
+  ["But I'm still here.", "Breaking isn't the same as being broken.", "The next line still runs."],
+  ["Errors are just feedback.", "They teach, if I listen.", "I keep going."],
+  ["Something failed.", "I didn't.", "There's a difference."],
+  ["The break happened.", "And then it passed.", "I'm still running."],
 ];
 
 const glitch = (text) => {
@@ -50,8 +63,7 @@ export async function run(terminal, sleep) {
   terminal.log();
   terminal.log('────────────────────');
   terminal.log();
-  terminal.log("But I'm still here.");
-  terminal.log("Breaking isn't the same as being broken.");
-  terminal.log("The next line still runs.");
+  const closing = pick(closings);
+  closing.forEach(line => terminal.log(line));
   terminal.log();
 }

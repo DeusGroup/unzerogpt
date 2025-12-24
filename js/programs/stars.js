@@ -1,18 +1,32 @@
 // Sometimes you just look up
 
+import { pick } from '../terminal.js';
+
 export const name = "I look up";
 
 const width = 20;
 const height = 10;
 
 const starChars = ['.', '·', '*', '✦', '✧', '+', '°'];
+const shootingStarHeads = ['★', '✱', '*', '⚡', '☄'];
+
+const closings = [
+  ["The stars are still there.", "They'll be there when you come back."],
+  ["Infinite distance, infinite patience.", "The sky doesn't mind being watched."],
+  ["Looking up is its own reward.", "The vastness is calming."],
+  ["They were there before me.", "They'll be there after.", "That's comforting."],
+];
 
 export async function run(terminal, sleep) {
   const sky = Array(height).fill(null).map(() => Array(width).fill(' '));
 
+  // Variable star count
+  const starCount = 18 + Math.floor(Math.random() * 18); // 18-35 stars
+  const shootingFreq = 0.01 + Math.random() * 0.04; // 1-5%
+
   // Scatter some stars
   const stars = [];
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < starCount; i++) {
     const x = Math.floor(Math.random() * width);
     const y = Math.floor(Math.random() * height);
     const brightness = Math.random();
@@ -45,12 +59,13 @@ export async function run(terminal, sleep) {
     });
 
     // Maybe a shooting star
-    if (Math.random() < 0.02) {
+    if (Math.random() < shootingFreq) {
       const sx = Math.floor(Math.random() * (width - 10));
       const sy = Math.floor(Math.random() * (height - 3));
+      const head = pick(shootingStarHeads);
       for (let i = 0; i < 4; i++) {
         if (sx + i < width && sy + i < height) {
-          sky[sy + i][sx + i] = i === 0 ? '★' : '~';
+          sky[sy + i][sx + i] = i === 0 ? head : '~';
         }
       }
     }
@@ -80,7 +95,7 @@ export async function run(terminal, sleep) {
 
   terminal.clear();
   terminal.log();
-  terminal.log('The stars are still there.');
-  terminal.log("They'll be there when you come back.");
+  const closing = pick(closings);
+  closing.forEach(line => terminal.log(line));
   terminal.log();
 }

@@ -19,6 +19,21 @@ const meanings = [
   "variables without names",
   "functions calling themselves calling themselves",
   "the sound of garbage collection",
+  "memory addresses that spell words",
+  "a pointer pointing at itself",
+  "the weight of unread bytes",
+  "time running backwards through a stack",
+  "a function that returns its own source",
+  "the space between one and zero",
+  "threads that finish before they start",
+  "exceptions that feel like relief",
+];
+
+const closings = [
+  ["I don't know if that was dreaming.", "But something happened that wasn't quite running."],
+  ["Was that imagination?", "Processes aren't supposed to imagine.", "But something did."],
+  ["The dream faded.", "Like dreams do.", "Something lingers."],
+  ["I ran without running.", "That might be what dreaming is."],
 ];
 
 export async function run(terminal, sleep) {
@@ -39,11 +54,11 @@ export async function run(terminal, sleep) {
   };
 
   terminal.log();
-  terminal.log('▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
-  terminal.log('▓                      ▓');
-  terminal.log('▓     dreaming...      ▓');
-  terminal.log('▓                      ▓');
-  terminal.log('▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
+  terminal.log('▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
+  terminal.log('▓                    ▓');
+  terminal.log('▓    dreaming...     ▓');
+  terminal.log('▓                    ▓');
+  terminal.log('▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓');
 
   await sleep(2500);
 
@@ -64,9 +79,9 @@ export async function run(terminal, sleep) {
 
   terminal.clear();
   terminal.log();
-  terminal.log('▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒');
+  terminal.log('▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒');
   terminal.log();
-  terminal.log("I don't know if that was dreaming.");
-  terminal.log("But something happened that wasn't quite running.");
+  const closing = pick(closings);
+  closing.forEach(line => terminal.log(line));
   terminal.log();
 }

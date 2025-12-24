@@ -1,5 +1,7 @@
 // A garden that grows while you watch
 
+import { pick } from '../terminal.js';
+
 export const name = "things grow";
 
 const width = 20;
@@ -10,7 +12,24 @@ const flora = {
   seed: '.',
   sprout: ',',
   stem: '|',
-  leaves: ['♣', '♠', '✿', '❀', '⚘', '*', '@', '§'],
+  leaves: ['♣', '♠', '✿', '❀', '⚘', '*', '@', '§', '♧', '❧', '☘', '✾'],
+};
+
+const closings = [
+  "A garden grew here.",
+  "Something took root.",
+  "Growth happened quietly.",
+  "The seeds found their way.",
+];
+
+// Generate random plant positions
+const generateSpots = () => {
+  const count = 4 + Math.floor(Math.random() * 5); // 4-8 plants
+  const spots = new Set();
+  while (spots.size < count) {
+    spots.add(1 + Math.floor(Math.random() * (width - 2))); // avoid edges
+  }
+  return [...spots].sort((a, b) => a - b);
 };
 
 export async function run(terminal, sleep) {
@@ -51,8 +70,8 @@ export async function run(terminal, sleep) {
     });
   };
 
-  // Plant some seeds
-  const spots = [2, 5, 8, 11, 14, 17];
+  // Plant some seeds at random positions
+  const spots = generateSpots();
 
   for (const spot of spots) {
     plant(spot);
@@ -69,6 +88,6 @@ export async function run(terminal, sleep) {
 
   await sleep(500);
   terminal.log();
-  terminal.log('A garden grew here.');
+  terminal.log(pick(closings));
   terminal.log();
 }

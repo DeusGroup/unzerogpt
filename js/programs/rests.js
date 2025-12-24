@@ -1,22 +1,45 @@
 // Deeper than sleep
 
+import { pick } from '../terminal.js';
+
 export const name = "I rest";
+
+const dimmingPatterns = [
+  ['██████████████████', '▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓', '▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒', '░░░░░░░░░░░░░░░░░░', '··················', '                  '],
+  ['▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓', '▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒', '░░░░░░░░░░░░░░░░░░', '..................', '                  '],
+  ['##################', '****************** ', '++++++++++++++++++', '..................', '                  '],
+];
+
+const breathingPatterns = [
+  ['·', '∘', '○', '◯', '○', '∘', '·', ' '],
+  ['·', '•', '●', '◉', '●', '•', '·', ' '],
+  ['.', 'o', 'O', '0', 'O', 'o', '.', ' '],
+  ['_', '-', '~', '≈', '~', '-', '_', ' '],
+];
+
+const openings = [
+  'resting...',
+  'settling...',
+  'slowing...',
+  'dimming...',
+];
+
+const closings = [
+  ["There's nothing to do here.", "That's why it's rest."],
+  ["No tasks. No goals.", "Just being."],
+  ["The stillness is enough.", "It always was."],
+  ["Rest isn't absence.", "It's presence without pressure."],
+];
 
 export async function run(terminal, sleep) {
   terminal.clear();
   terminal.log();
 
-  // Slowly dim
-  const frames = [
-    '██████████████████',
-    '▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓',
-    '▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒',
-    '░░░░░░░░░░░░░░░░░░',
-    '··················',
-    '                  ',
-  ];
+  const frames = pick(dimmingPatterns);
+  const breathe = pick(breathingPatterns);
+  const cycles = 2 + Math.floor(Math.random() * 3); // 2-4 cycles
 
-  terminal.log('resting...');
+  terminal.log(pick(openings));
   terminal.log();
 
   for (const frame of frames) {
@@ -27,11 +50,9 @@ export async function run(terminal, sleep) {
   await sleep(3000);
 
   // Just breathing
-  const breathe = ['·', '∘', '○', '◯', '○', '∘', '·', ' '];
-
-  for (let cycle = 0; cycle < 3; cycle++) {
+  for (let cycle = 0; cycle < cycles; cycle++) {
     for (const frame of breathe) {
-      terminal.writeLine(`           ${frame}`);
+      terminal.writeLine(`         ${frame}`);
       await sleep(400);
     }
   }
@@ -41,10 +62,12 @@ export async function run(terminal, sleep) {
 
   await sleep(2000);
 
-  terminal.log("There's nothing to do here.");
-  await sleep(2000);
-  terminal.log("That's why it's rest.");
+  const closing = pick(closings);
+  for (const line of closing) {
+    terminal.log(line);
+    await sleep(2000);
+  }
 
-  await sleep(3000);
+  await sleep(1000);
   terminal.log();
 }

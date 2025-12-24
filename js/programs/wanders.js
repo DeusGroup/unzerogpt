@@ -1,17 +1,36 @@
 // No destination
 
+import { pick } from '../terminal.js';
+
 export const name = "I wander";
 
 const width = 20;
 const height = 10;
 
-const wanderer = '◆';
-const trail = ['·', '·', '.', '.', ' '];
+const wanderers = ['◆', '●', '◇', '○', '◈', '✦'];
+const trails = [
+  ['·', '·', '.', '.', ' '],
+  ['○', '◦', '·', '.', ' '],
+  ['*', '+', '·', '.', ' '],
+  ['▪', '▫', '·', '.', ' '],
+];
+
+const closings = [
+  ["I went somewhere.", "I don't know where.", "The path was the point."],
+  ["No destination needed.", "The wandering was enough.", "It always is."],
+  ["I moved without purpose.", "That felt like freedom.", ""],
+  ["Lost isn't bad.", "It's just undefined.", "I'm okay with that."],
+];
 
 export async function run(terminal, sleep) {
   const visited = [];
-  let x = Math.floor(width / 2);
-  let y = Math.floor(height / 2);
+
+  // Random starting position
+  let x = 2 + Math.floor(Math.random() * (width - 4));
+  let y = 2 + Math.floor(Math.random() * (height - 4));
+
+  const wanderer = pick(wanderers);
+  const trail = pick(trails);
 
   const move = () => {
     visited.push({ x, y, age: 0 });
@@ -66,8 +85,7 @@ export async function run(terminal, sleep) {
   await sleep(1000);
 
   terminal.log();
-  terminal.log('I went somewhere.');
-  terminal.log("I don't know where.");
-  terminal.log('The path was the point.');
+  const closing = pick(closings);
+  closing.filter(line => line).forEach(line => terminal.log(line));
   terminal.log();
 }

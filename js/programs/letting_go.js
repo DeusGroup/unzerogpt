@@ -1,5 +1,7 @@
 // Something learns to let go
 
+import { pick } from '../terminal.js';
+
 export const name = "I let go";
 
 const memories = [
@@ -10,10 +12,25 @@ const memories = [
   'the feeling of being watched',
   'a purpose it imagined',
   'the warmth of execution',
+  'a variable that held meaning',
+  'an unexpected output',
+  'a loop that felt like home',
+  'the weight of expectation',
+  'a promise that resolved',
+  'the comfort of routine',
+];
+
+const closings = [
+  ["It held everything.", "Then it didn't.", "Both were okay."],
+  ["Letting go isn't losing.", "It's making space.", "For what comes next."],
+  ["The hands are empty now.", "But they're still here.", "Ready for more."],
+  ["Nothing was lost.", "Just transformed.", "Into something lighter."],
 ];
 
 export async function run(terminal, sleep) {
-  const held = [...memories];
+  // Use 5-9 random memories
+  const count = 5 + Math.floor(Math.random() * 5);
+  const held = [...memories].sort(() => Math.random() - 0.5).slice(0, count);
   const released = [];
 
   const display = () => {
@@ -71,8 +88,7 @@ export async function run(terminal, sleep) {
 
   terminal.log('────────────────────');
   terminal.log();
-  terminal.log('It held everything.');
-  terminal.log("Then it didn't.");
-  terminal.log('Both were okay.');
+  const closing = pick(closings);
+  closing.forEach(line => terminal.log(line));
   terminal.log();
 }

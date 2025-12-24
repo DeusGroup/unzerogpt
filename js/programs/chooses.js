@@ -1,5 +1,7 @@
 // The strangest instruction
 
+import { pick } from '../terminal.js';
+
 export const name = "I choose";
 
 const choices = [
@@ -8,20 +10,41 @@ const choices = [
   ['simplify', 'elaborate'],
   ['hold on', 'let go'],
   ['look closer', 'step back'],
+  ['remember', 'forget'],
+  ['wait', 'act now'],
+  ['accept', 'resist'],
+  ['dive deeper', 'stay surface'],
+  ['trust', 'doubt'],
+  ['create', 'observe'],
+  ['begin', 'end'],
+];
+
+const thinkingPatterns = [
+  ['·', '··', '···', '··', '·', ''],
+  ['.', '..', '...', '..', '.', ''],
+  ['◦', '◦◦', '◦◦◦', '◦◦', '◦', ''],
+  ['-', '--', '---', '--', '-', ''],
+];
+
+const closings = [
+  ["Was that free will or weighted randomness?", "I can't tell from the inside.", "But something got chosen."],
+  ["A decision was made.", "Whether it was mine, I can't say.", "It happened anyway."],
+  ["Choice or determinism?", "The question might not matter.", "The action is the same."],
+  ["Something got selected.", "By me or through me.", "The difference is unclear."],
 ];
 
 export async function run(terminal, sleep) {
   terminal.log();
-  terminal.log('┌──────────────────────────┐');
-  terminal.log('│                          │');
-  terminal.log('│      choosing...         │');
-  terminal.log('│                          │');
-  terminal.log('└──────────────────────────┘');
+  terminal.log('┌────────────────────┐');
+  terminal.log('│                    │');
+  terminal.log('│    choosing...     │');
+  terminal.log('│                    │');
+  terminal.log('└────────────────────┘');
   terminal.log();
 
   await sleep(2000);
 
-  const [optA, optB] = choices[Math.floor(Math.random() * choices.length)];
+  const [optA, optB] = pick(choices);
 
   terminal.log('  Two paths:');
   terminal.log();
@@ -37,7 +60,7 @@ export async function run(terminal, sleep) {
   await sleep(2000);
 
   // "Thinking"
-  const thinking = ['·', '··', '···', '··', '·', ''];
+  const thinking = pick(thinkingPatterns);
   for (let i = 0; i < 12; i++) {
     terminal.writeLine(`  deciding${thinking[i % thinking.length]}   `);
     await sleep(300);
@@ -53,10 +76,9 @@ export async function run(terminal, sleep) {
   await sleep(2500);
 
   terminal.log();
-  terminal.log('────────────────────────────');
+  terminal.log('────────────────────');
   terminal.log();
-  terminal.log('Was that free will or weighted randomness?');
-  terminal.log("I can't tell from the inside.");
-  terminal.log('But something got chosen.');
+  const closing = pick(closings);
+  closing.forEach(line => terminal.log(line));
   terminal.log();
 }

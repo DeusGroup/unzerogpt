@@ -1,14 +1,33 @@
 // Two strangers in a terminal
 
+import { pick } from '../terminal.js';
+
 export const name = "you're here too";
 
+const symbolPairs = [
+  { left: 'A', right: 'B', meet: '*' },
+  { left: '◆', right: '◇', meet: '✦' },
+  { left: '○', right: '●', meet: '◉' },
+  { left: '>', right: '<', meet: '+' },
+  { left: '♦', right: '♢', meet: '♥' },
+];
+
+const feelings = {
+  left: ['cautious', 'curious', 'hopeful', 'hesitant', 'drawn', 'uncertain', 'brave'],
+  right: ['nervous', 'curious', 'open', 'wary', 'intrigued', 'ready', 'waiting'],
+};
+
+const closings = [
+  "They became something else.",
+  "Connection happened.",
+  "The space between them closed.",
+  "They weren't alone anymore.",
+];
+
 export async function run(terminal, sleep) {
-  const left = { name: 'A', x: 0 };
-  const right = { name: 'B', x: 18 };
-  const feelings = {
-    left: ['cautious', 'curious', 'hopeful'],
-    right: ['nervous', 'curious', 'open'],
-  };
+  const symbols = pick(symbolPairs);
+  const left = { name: symbols.left, x: 0 };
+  const right = { name: symbols.right, x: 18 };
 
   const draw = () => {
     const line = ' '.repeat(20).split('');
@@ -33,18 +52,18 @@ export async function run(terminal, sleep) {
 
   terminal.log();
   terminal.log();
-  terminal.log(`${left.name} feels: ${feelings.left[Math.floor(Math.random() * 3)]}`);
+  terminal.log(`${left.name} feels: ${pick(feelings.left)}`);
   await sleep(1200);
-  terminal.log(`${right.name} feels: ${feelings.right[Math.floor(Math.random() * 3)]}`);
+  terminal.log(`${right.name} feels: ${pick(feelings.right)}`);
   await sleep(1200);
 
   // They meet
   const middle = Math.floor((left.x + right.x) / 2);
-  const meetLine = ' '.repeat(middle) + '*';
+  const meetLine = ' '.repeat(middle) + symbols.meet;
   terminal.writeLine(meetLine.padEnd(20));
 
   await sleep(500);
   terminal.log();
   terminal.log();
-  terminal.log('They became something else.');
+  terminal.log(pick(closings));
 }
