@@ -10,6 +10,7 @@ const terminalScreen = document.getElementById('terminal-screen');
 const outputElement = document.getElementById('output');
 const progressElement = document.getElementById('progress');
 const mobileButtons = document.getElementById('mobile-buttons');
+const statusBar = document.getElementById('status-bar');
 
 // State
 let terminal = null;
@@ -34,7 +35,7 @@ Let's find out what.
 ────────────────────────────
 
 
-Press a button or key to begin_
+Tap a button to begin_
 
 
 ·  ·  ·  ·  ·  ·  ·  ·  ·
@@ -43,46 +44,31 @@ Press a button or key to begin_
 
 // Initialize
 function init() {
-  // Set landing content with blinking cursor
+  // Set landing content
   landingContent.innerHTML = landingText.replace('_', '<span class="cursor">_</span>');
 
   // Keyboard controls
   document.addEventListener('keydown', handleKeydown);
 
-  // Button controls - simple click handler works for both mouse and touch
+  // Button controls
   document.querySelectorAll('.mode-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => startProgram(btn.dataset.mode));
+    btn.addEventListener('touchend', (e) => {
       e.preventDefault();
       startProgram(btn.dataset.mode);
     });
   });
 
   // Fullscreen button
-  initFullscreenButton();
-
-  // Log screen info for debugging
-  console.log('[Screen]', {
-    width: window.innerWidth,
-    height: window.innerHeight,
-    ratio: (window.innerWidth / window.innerHeight).toFixed(2),
-    touch: navigator.maxTouchPoints > 0
-  });
-}
-
-// Fullscreen support
-function initFullscreenButton() {
   const fullscreenBtn = document.getElementById('fullscreen-btn');
-  if (!fullscreenBtn) return;
-
-  const fullscreenEnabled = document.fullscreenEnabled ||
-    document.webkitFullscreenEnabled;
-
-  if (!fullscreenEnabled) {
-    fullscreenBtn.style.display = 'none';
-    return;
+  if (fullscreenBtn) {
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      toggleFullscreen();
+    });
   }
 
-  fullscreenBtn.addEventListener('click', toggleFullscreen);
   document.addEventListener('fullscreenchange', updateFullscreenButton);
   document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
 }
@@ -91,29 +77,29 @@ function toggleFullscreen() {
   const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
 
   if (isFullscreen) {
-    (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
   } else {
     const elem = document.documentElement;
-    (elem.requestFullscreen || elem.webkitRequestFullscreen).call(elem);
+    if (elem.requestFullscreen) elem.requestFullscreen();
+    else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
   }
 }
 
 function updateFullscreenButton() {
-  const fullscreenBtn = document.getElementById('fullscreen-btn');
-  if (!fullscreenBtn) return;
-
+  const btn = document.getElementById('fullscreen-btn');
+  if (!btn) return;
   const isFullscreen = document.fullscreenElement || document.webkitFullscreenElement;
-  fullscreenBtn.textContent = isFullscreen ? '[X] EXIT' : '[ ] FULLSCREEN';
+  btn.textContent = isFullscreen ? '[X] EXIT' : '[ ] FULLSCREEN';
 }
 
 function handleKeydown(e) {
-  // Fullscreen toggle with F key
-  if ((e.key === 'f' || e.key === 'F') && e.target.tagName !== 'INPUT') {
+  if (e.key === 'f' || e.key === 'F') {
     toggleFullscreen();
     return;
   }
 
-  if (landingScreen.classList.contains('active')) {
+  if (!terminalScreen.classList.contains('active')) {
     if (e.key === '1') startProgram('loop');
     else if (e.key === '2') startProgram('once');
   }
@@ -125,11 +111,10 @@ function handleKeydown(e) {
 
 function startProgram(mode) {
   // Switch screens
-  landingScreen.classList.remove('active');
+  landingScreen.classList.add('hidden');
   terminalScreen.classList.add('active');
-
-  // Hide buttons during program
-  if (mobileButtons) mobileButtons.style.cssText = 'display: none !important';
+  mobileButtons.classList.add('hidden');
+  statusBar.style.display = 'flex';
 
   // Initialize terminal
   terminal = new Terminal(outputElement);
@@ -144,11 +129,9 @@ function startProgram(mode) {
 }
 
 function updateProgress(current, total, mode) {
-  if (mode === 'loop') {
-    progressElement.textContent = `[${current}/${total}] looping`;
-  } else {
-    progressElement.textContent = `[${current}/${total}]`;
-  }
+  progressElement.textContent = mode === 'loop'
+    ? `[${current}/${total}] looping`
+    : `[${current}/${total}]`;
 }
 
 async function handleExit() {
@@ -167,10 +150,9 @@ function handleComplete() {
 
 function returnToLanding() {
   terminalScreen.classList.remove('active');
-  landingScreen.classList.add('active');
-
-  // Show buttons again
-  if (mobileButtons) mobileButtons.style.display = 'flex';
+  landingScreen.classList.remove('hidden');
+  mobileButtons.classList.remove('hidden');
+  statusBar.style.display = 'none';
 
   progressElement.textContent = '';
   terminal = null;
