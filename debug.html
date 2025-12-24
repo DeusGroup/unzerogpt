@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>unzerogpt - program runner</title>
+
+    <style>
+      :root {
+        color-scheme: light dark; /* lets the browser style form controls appropriately */
+      }
+
+      body { margin: 0; font-family: monospace; }
+
+      #bar {
+        padding: 12px 16px;
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      #wrap {
+        height: calc(100vh - 49px);
+        overflow: auto;
+        padding: 16px;
+      }
+
+      #terminal { white-space: pre-wrap; }
+      select, button { font-family: inherit; }
+      #status { opacity: 0.8; }
+
+      /* default (light) */
+      body { background: #ffffff; color: #111111; }
+      #wrap { background: #ffffff; }
+
+      /* dark mode */
+      @media (prefers-color-scheme: dark) {
+        body { background: #0f1115; color: #e6e6e6; }
+        #bar { border-bottom: 1px solid #2a2f3a; }
+        #wrap { background: #0f1115; }
+
+        select, button {
+          background: #161a22;
+          color: #e6e6e6;
+          border: 1px solid #2a2f3a;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="bar">
+      <label for="program">Program:</label>
+      <select id="program"></select>
+      <button id="runBtn" type="button">Run</button>
+      <span id="status"></span>
+    </div>
+
+    <div id="wrap">
+      <div id="terminal"></div>
+    </div>
+
+    <script type="module">
+      import { Terminal, sleep } from "./js/terminal.js";
+
+      const terminal = new Terminal(document.querySelector("#terminal"));
+      const selectEl = document.querySelector("#program");
+      const runBtn = document.querySelector("#runBtn");
+      const statusEl = document.querySelector("#status");
+
+      const params = new URLSearchParams(location.search);
+      const initial = params.get("p"); // e.g. "chooses"
+
+      async function listPrograms() {
+        // python http.server returns an HTML directory listing
+        const res = await fetch("./js/programs/");
+        if (!res.ok) throw new Error(`Failed to list programs: HTTP ${res.status}`);
+        const html = await res.text();
+
+        // Extract href="something.js" from the directory index HTML
+        const re = /href="([^"]+\.js)"/g;
+        const files = [];
+        let m;
+        while ((m = re.exec(html)) !== null) {
+          const name = m[1];
+          // skip parent dir links, query strings, etc.
+          if (name.includes("/")) continue;
+          files.push(name);
+        }
+
+        // De-dupe + sort
+        return [...new Set(files)].sort((a, b) => a.localeCompare(b));
+      }
+
+      function setStatus(text) {
+        statusEl.textContent = text;
+      }
+
+      async function runProgram(baseName) {
+        terminal.clear();
+        terminal.log(`Running program: ${baseName}`);
+
+        // Update URL for shareable deep links
+        const u = new URL(location.href);
+        u.searchParams.set("p", baseName);
+        history.replaceState(null, "", u);
+
+        try {
+          setStatus("loading…");
+          // Cache-buster so edits reload without hard refresh
+          const mod = await import(`./js/programs/${baseName}.js?ts=${Date.now()}`);
+
+          if (typeof mod.run !== "function") {
+            terminal.log(`Error: ${baseName}.js does not export run(terminal, sleep).`);
+            setStatus("error");
+            return;
+          }
+
+          setStatus("running…");
+          await mod.run(terminal, sleep);
+          setStatus("done");
+        } catch (err) {
+          terminal.log(String(err?.stack ?? err));
+          setStatus("error");
+        }
+      }
+
+      // Populate dropdown dynamically
+      try {
+        const files = await listPrograms();
+        if (files.length === 0) throw new Error("No .js programs found in ./js/programs/");
+
+        for (const f of files) {
+          const base = f.replace(/\.js$/, "");
+          const opt = document.createElement("option");
+          opt.value = base;
+          opt.textContent = base;
+          selectEl.appendChild(opt);
+        }
+
+        // Choose initial selection
+        const defaultProgram =
+          initial && files.includes(`${initial}.js`) ? initial : selectEl.options[0].value;
+
+        selectEl.value = defaultProgram;
+
+        // Auto-run on load
+        await runProgram(defaultProgram);
+      } catch (err) {
+        terminal.log("Failed to build program list.");
+        terminal.log(String(err?.stack ?? err));
+        setStatus("error");
+      }
+
+      runBtn.addEventListener("click", () => runProgram(selectEl.value));
+      selectEl.addEventListener("change", () => runProgram(selectEl.value));
+    </script>
+  </body>
+</html>
