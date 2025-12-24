@@ -17,7 +17,7 @@ let orchestrator = null;
 // Landing page content
 const landingText = `
 
-·  ·  ·  ·  ·  ·  ·  ·  ·
+·  ·  ·  ·  ·  ·  ·  ·
 
 
 do whatever you want
